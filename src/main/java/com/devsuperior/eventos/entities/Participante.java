@@ -12,16 +12,23 @@ public class Participante {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Integer id;
+
     private String nome;
+
+    @Column(unique = true)
     private String email;
+
+    @ManyToMany(mappedBy = "participantes")
+    private Set<Atividade> atividades = new HashSet<>();
 
     public Participante() {
     }
 
-    public Participante(Integer id, String nome, String email) {
+    public Participante(Integer id, String nome, String email, Set<Atividade> atividades) {
         this.id = id;
         this.nome = nome;
         this.email = email;
+        this.atividades = atividades;
     }
 
     public Integer getId() {
@@ -46,5 +53,9 @@ public class Participante {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Atividade> getAtividades() {
+        return atividades;
     }
 }
